@@ -1,6 +1,7 @@
 "use client";
 
 import { appConfig } from "@/config/app";
+import { WalletConnectButton } from "@/components/layout/wallet-connect-button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,7 +28,9 @@ export function Header() {
           </div>
         </Link>
         {/* Right part */}
-        <div className="flex-1 flex items-center justify-end gap-4"></div>
+        <div className="flex-1 flex items-center justify-end gap-4">
+          <WalletConnectButton />
+        </div>
       </div>
     </header>
   );

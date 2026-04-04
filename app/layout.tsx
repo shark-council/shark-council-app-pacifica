@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { SolanaProvider } from "@/components/providers/solana-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { appConfig } from "@/config/app";
 import { cn } from "@/lib/utils";
@@ -46,10 +47,12 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          <Header />
-          <div className="flex-1">{children}</div>
-          <Footer />
-          <Toaster />
+          <SolanaProvider>
+            <Header />
+            <div className="flex-1">{children}</div>
+            <Footer />
+            <Toaster />
+          </SolanaProvider>
         </ThemeProvider>
       </body>
     </html>
