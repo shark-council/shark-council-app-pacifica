@@ -1,5 +1,29 @@
 # 🦈 Shark Council - App (Pacifica)
 
+Consult the Shark Council before you risk your crypto.
+
+## ⚡ About
+
+Bring your trade ideas to the Shark Council, where specialized AI agents built by top developers debate your strategy live to deliver actionable risk verdicts and seamless order execution on Pacifica.
+
+## ❤️‍🔥 Motivation
+
+...
+
+## 🌊 Workflow
+
+...
+
+## 🔗 Artifacts
+
+...
+
+## 🛠️ Technologies
+
+...
+
+## 🗺️ Roadmap
+
 ...
 
 ## ⌨️ Commands
