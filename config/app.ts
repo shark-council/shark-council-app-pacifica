@@ -6,4 +6,4 @@ export const appConfig = {
     name: "@kiv1n",
     url: "https://x.com/kiv1n",
   },
-};
+} as const;
