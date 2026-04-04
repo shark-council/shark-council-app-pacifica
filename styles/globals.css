@@ -190,37 +190,3 @@
     cursor: pointer;
   }
 }
-
-@layer components {
-  .wallet-adapter-button-trigger {
-    min-height: 2rem;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    font-weight: 500;
-    line-height: 1;
-    padding-inline: 0.75rem;
-    transition:
-      background-color 150ms ease,
-      border-color 150ms ease,
-      color 150ms ease;
-  }
-
-  .wallet-adapter-button-trigger:hover,
-  .wallet-adapter-button-trigger:focus-visible {
-    background: var(--muted);
-    color: var(--foreground);
-  }
-
-  .wallet-adapter-button-trigger:not([disabled]):hover {
-    background: var(--muted);
-  }
-
-  .wallet-adapter-dropdown-list,
-  .wallet-adapter-modal-wrapper {
-    font-family: var(--font-sans);
-  }
-}
