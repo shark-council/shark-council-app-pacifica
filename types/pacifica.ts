@@ -34,6 +34,31 @@ export interface PacificaCreateMarketOrderResponse {
   order_id: number;
 }
 
+export interface PacificaAccountInfo {
+  balance: string;
+  fee_level: number;
+  maker_fee: string;
+  taker_fee: string;
+  account_equity: string;
+  available_to_spend: string;
+  available_to_withdraw: string;
+  pending_balance: string;
+  total_margin_used: string;
+  cross_mmr: string;
+  positions_count: number;
+  orders_count: number;
+  stop_orders_count: number;
+  updated_at: number;
+  use_ltp_for_stop_orders: boolean;
+}
+
+export interface PacificaGetAccountInfoResponse {
+  success: boolean;
+  data: PacificaAccountInfo;
+  error: string | null;
+  code: number | null;
+}
+
 export interface PacificaSignatureMessage<TData> {
   data: TData;
   expiry_window: number;

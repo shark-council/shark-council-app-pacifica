@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { handleError } from "@/lib/error";
+import { getPacificaAccountInfo } from "@/lib/pacifica-account";
 import { createPacificaMarketOrder } from "@/lib/pacifica-orders";
 import { useWallet } from "@solana/wallet-adapter-react";
-import axios from "axios";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -31,14 +31,9 @@ export default function PacificaPage() {
 
       setIsGettingAccountInfo(true);
 
-      const { data } = await axios.get(
-        "https://test-api.pacifica.fi/api/v1/account",
-        {
-          params: { account: account },
-        },
-      );
+      const response = await getPacificaAccountInfo(account);
 
-      console.log("[Component] Account info:", data);
+      console.log("[Component] Account info:", response);
 
       toast.success("Account info retrieved", {
         description: "Check the console for details",
@@ -66,25 +61,26 @@ export default function PacificaPage() {
 
       setIsCreatingOrder(true);
 
-      const order = await createPacificaMarketOrder({
-        account,
-        signMessage,
-        order: {
-          symbol: "ETH",
-          amount: "0.1",
-          side: "bid",
-          slippage_percent: "0.5",
-          reduce_only: false,
-          client_order_id: crypto.randomUUID(),
-        },
-      });
+      const { response, requestBody, signableMessage } =
+        await createPacificaMarketOrder({
+          account,
+          signMessage,
+          order: {
+            symbol: "ETH",
+            amount: "0.1",
+            side: "bid",
+            slippage_percent: "0.5",
+            reduce_only: false,
+            client_order_id: crypto.randomUUID(),
+          },
+        });
 
+      console.log("[Component] Market order request body:", requestBody);
       console.log(
         "[Component] Market order signable message:",
-        order.signableMessage,
+        signableMessage,
       );
-      console.log("[Component] Market order request body:", order.requestBody);
-      console.log("[Component] Market order response:", order.data);
+      console.log("[Component] Market order response:", response);
 
       toast.success("Market order created", {
         description: "Check the console for details",

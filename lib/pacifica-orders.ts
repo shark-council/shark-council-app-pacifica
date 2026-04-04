@@ -78,7 +78,7 @@ export async function createPacificaMarketOrder(args: {
   );
 
   return {
-    data,
+    response: data,
     requestBody,
     serializedMessage,
     signableMessage,
