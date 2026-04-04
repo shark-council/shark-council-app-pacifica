@@ -11,5 +11,5 @@ const WalletMultiButton = dynamic(
 );
 
 export function WalletConnectButton() {
-  return <WalletMultiButton className="wallet-adapter-button-trigger" />;
+  return <WalletMultiButton />;
 }
