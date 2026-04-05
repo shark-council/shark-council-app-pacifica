@@ -15,8 +15,14 @@ This is a Next.js app for the Shark Council.
 - **TypeScript**: Type-safe development environment.
 - **Tailwind CSS**: Utility-first styling framework.
 - **shadcn/ui**: Accessible and customizable UI component primitives.
-- **Solana Web3**: Blockchain interactions via `@solana/web3.js` and `@solana/wallet-adapter`.
-- **Pacifica**: API-based order execution and account management.
+- **Solana**: Blockchain interactions via `@solana/web3.js` and `@solana/wallet-adapter`.
+- **Pacifica API**
+- **Pacifica Builder Codes**
+- **ERC-8004**
+- **Agent0**
+- **8004scan**
+- **LangChain**
+- **OpenRouter**
 
 # Project Structure
 
@@ -27,6 +33,7 @@ This is a Next.js app for the Shark Council.
   - `providers/`: Context providers for Solana, theme, and more.
   - `ui/`: Reusable primitive UI components (shadcn/ui).
 - `config/`: Configuration files for the application, Solana connection, and Pacifica-specific settings.
+- `hooks/`: Custom React hooks.
 - `lib/`: Core utility functions and logic for Solana interactions, Pacifica account management, and signing.
 - `public/`: Static assets like images and branding.
 - `styles/`: Global CSS and styling configurations.
