@@ -42,7 +42,7 @@ export function AgentCard(props: { agent: AgentSummary }) {
     <div className="bg-card border rounded-2xl p-4">
       <div className="flex flex-row gap-4">
         {/* Image */}
-        <Avatar className="size-10">
+        <Avatar className="size-12">
           <AvatarImage src={props.agent.image} alt={props.agent.name} />
           <AvatarFallback className="bg-accent text-accent-foreground">
             {props.agent.name[0].toUpperCase()}
