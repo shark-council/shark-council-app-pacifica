@@ -37,7 +37,7 @@ export function CouncilChatInput(props: {
         ref={textareaRef}
         onKeyDown={handleKeyDown}
         disabled={props.disabled}
-        placeholder="Ask the council..."
+        placeholder="Write your trade idea..."
         rows={1}
       />
       <Button

@@ -13,9 +13,8 @@ export function CouncilChatHero(props: { className?: ClassValue }) {
       <h2 className="text-3xl font-bold tracking-tight text-accent-foreground text-center">
         Consult the Council
       </h2>
-      <p className="max-w-md text-accent-foreground text-center">
-        Debate your trade idea with AI agents for an instant risk verdict and
-        seamless order execution on Pacifica
+      <p className="text-accent-foreground text-center">
+        Get actionable risk verdicts and seamless order execution on Pacifica
       </p>
     </div>
   );
