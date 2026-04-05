@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import { pacificaConfig } from "@/config/pacifica";
 import { handleError } from "@/lib/error";
 import { createPacificaMarketOrder } from "@/lib/pacifica-orders";
 import type { ChatPacificaVerdictAction } from "@/types/chat";
@@ -22,6 +23,14 @@ const ORDER_SIDES: { label: string; value: PacificaOrderSide }[] = [
   { label: "Buy", value: "bid" },
   { label: "Sell", value: "ask" },
 ];
+
+function normalizedSideLabel(side: PacificaOrderSide) {
+  return side === "bid" ? "Buy" : "Sell";
+}
+
+function buildPacificaTradeUrl(symbol: string) {
+  return new URL(`/trade/${symbol}`, pacificaConfig.appBaseUrl).toString();
+}
 
 export function CouncilChatOrderForm(props: {
   action: ChatPacificaVerdictAction;
@@ -80,6 +89,16 @@ export function CouncilChatOrderForm(props: {
 
       toast.success("Market order created", {
         description: `${normalizedSideLabel(side)} ${normalizedAmount} ${normalizedSymbol} on Pacifica`,
+        action: {
+          label: "Open Pacifica App",
+          onClick: () => {
+            window.open(
+              buildPacificaTradeUrl(normalizedSymbol),
+              "_blank",
+              "noopener,noreferrer",
+            );
+          },
+        },
       });
     } catch (error) {
       handleError({ error, toastTitle: "Failed to create market order" });
@@ -168,8 +187,4 @@ export function CouncilChatOrderForm(props: {
       </CardContent>
     </Card>
   );
-}
-
-function normalizedSideLabel(side: PacificaOrderSide) {
-  return side === "bid" ? "Buy" : "Sell";
 }
