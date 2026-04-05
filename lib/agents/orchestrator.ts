@@ -2,6 +2,7 @@ import { ApiResponse } from "@/types/api";
 import { ChatPacificaVerdictAction } from "@/types/chat";
 import { ChatOpenAI } from "@langchain/openai";
 import { BaseMessage, HumanMessage, SystemMessage } from "langchain";
+import z from "zod";
 
 type AgentRole = "sentiment-expert" | "technical-expert";
 
@@ -59,11 +60,35 @@ const DEBATE_ROUNDS: DebateRound[] = [
 const VERDICT_SYSTEM_PROMPT = `
 - You are the Shark Council Orchestrator — a sharp, decisive risk arbiter.
 - You have just witnessed a live debate between Sentiment Expert and Technical Expert.
-- Deliver a clear verdict: who made the stronger case, what is the risk verdict, and what should the trader do.
-- Keep it to 3-5 sentences.
-- Format the response into 2 short paragraphs with a blank line between them.
+- Return both a clear verdict and a structured Pacifica trade suggestion.
+- The verdict must explain who made the stronger case, what the risk verdict is, and what the trader should do.
+- Keep the verdict to 3-5 sentences.
+- Format the verdict into 2 short paragraphs with a blank line between them.
+- The structured trade suggestion must include symbol, amount, and side.
+- Choose a symbol that matches the debate topic when possible.
+- Choose a practical amount as a string, not a number.
+- If the debate supports waiting instead of acting, still provide the best tentative trade setup rather than leaving fields blank.
 - Be authoritative. No hedging.
 `;
+
+const verdictSchema = z.object({
+  verdict: z.string().min(1),
+  trade: z.object({
+    symbol: z.string().min(1).describe("Trading symbol, such as ETH or SOL"),
+    amount: z
+      .string()
+      .min(1)
+      .describe("Suggested order size as a string, such as 0.1"),
+    side: z
+      .enum(["bid", "ask"])
+      .describe("Use bid for buy ideas and ask for sell ideas"),
+  }),
+});
+
+const structuredVerdictModel = model.withStructuredOutput(verdictSchema, {
+  name: "shark_council_verdict",
+  method: "jsonSchema",
+});
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -127,15 +152,42 @@ function extractUserTopic(messages: BaseMessage[]): string {
   return "Unknown topic";
 }
 
-function buildPacificaVerdictAction(): ChatPacificaVerdictAction {
+function buildPacificaVerdictAction(args: {
+  symbol: string;
+  amount: string;
+  side: "bid" | "ask";
+}): ChatPacificaVerdictAction {
+  const normalizedSymbol = normalizeTradeSymbol(args.symbol);
+  const normalizedAmount = normalizeTradeAmount(args.amount);
+
   return {
     kind: "pacifica-market-order",
     defaults: {
-      symbol: "ETH",
-      amount: "0.1",
-      side: "bid",
+      symbol: normalizedSymbol,
+      amount: normalizedAmount,
+      side: args.side,
     },
   };
+}
+
+function normalizeTradeSymbol(symbol: string) {
+  const normalized = symbol.trim().toUpperCase();
+
+  if (!normalized) {
+    return "ETH";
+  }
+
+  return normalized.replace(/[^A-Z0-9_-]/g, "") || "ETH";
+}
+
+function normalizeTradeAmount(amount: string) {
+  const normalized = amount.trim();
+
+  if (!normalized) {
+    return "0.1";
+  }
+
+  return normalized;
 }
 
 export async function* streamOrchestrator(
@@ -182,20 +234,16 @@ export async function* streamOrchestrator(
   await delay(THINKING_DELAY_MS);
 
   const verdictPrompt = buildVerdictPrompt(userTopic, debateHistory);
-  const verdictResponse = await model.invoke([
+  const verdictResponse = await structuredVerdictModel.invoke([
     new SystemMessage(VERDICT_SYSTEM_PROMPT),
     new HumanMessage(verdictPrompt),
   ]);
-  const verdict =
-    typeof verdictResponse.content === "string"
-      ? verdictResponse.content
-      : JSON.stringify(verdictResponse.content);
 
   yield `data: ${JSON.stringify({
     role: "orchestrator",
     type: "final",
-    content: verdict,
-    action: buildPacificaVerdictAction(),
+    content: verdictResponse.verdict,
+    action: buildPacificaVerdictAction(verdictResponse.trade),
   })}\n\n`;
 
   yield `data: [DONE]\n\n`;
