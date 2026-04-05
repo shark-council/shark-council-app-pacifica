@@ -24,6 +24,7 @@ function buildMarketOrderOperationData(
     slippage_percent: order.slippage_percent,
     reduce_only: order.reduce_only,
     client_order_id: order.client_order_id,
+    ...(order.builder_code ? { builder_code: order.builder_code } : {}),
     ...(order.take_profit ? { take_profit: order.take_profit } : {}),
     ...(order.stop_loss ? { stop_loss: order.stop_loss } : {}),
   };

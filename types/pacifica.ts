@@ -17,6 +17,7 @@ export interface PacificaMarketOrderOperationData {
   client_order_id: string;
   take_profit?: PacificaOrderTrigger;
   stop_loss?: PacificaOrderTrigger;
+  builder_code?: string;
 }
 
 export interface PacificaCreateMarketOrderInput extends PacificaMarketOrderOperationData {
