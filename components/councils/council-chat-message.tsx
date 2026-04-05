@@ -53,9 +53,9 @@ export function CouncilChatMessage(props: { message: ChatUiMessage }) {
         ) : null}
         <AvatarFallback className="bg-primary">
           {props.message.role === "user" ? (
-            <User className="size-5 text-primary-foreground" />
+            <User className="text-primary-foreground" />
           ) : (
-            <Bot className="size-5 text-primary-foreground" />
+            <Bot className="text-primary-foreground" />
           )}
         </AvatarFallback>
       </Avatar>
