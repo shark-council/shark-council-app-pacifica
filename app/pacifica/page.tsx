@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
+import { pacificaConfig } from "@/config/pacifica";
 import { handleError } from "@/lib/error";
 import { getPacificaAccountInfo } from "@/lib/pacifica-account";
 import { createPacificaMarketOrder } from "@/lib/pacifica-orders";
@@ -66,11 +67,11 @@ export default function PacificaPage() {
           account,
           signMessage,
           order: {
-            symbol: "ETH",
-            amount: "0.1",
-            side: "bid",
-            slippage_percent: "0.5",
-            reduce_only: false,
+            symbol: pacificaConfig.defaultSymbol,
+            amount: pacificaConfig.defaultAmount,
+            side: pacificaConfig.defaultSide,
+            slippage_percent: pacificaConfig.defaultSlippagePercent,
+            reduce_only: pacificaConfig.defaultReduceOnly,
             client_order_id: crypto.randomUUID(),
           },
         });

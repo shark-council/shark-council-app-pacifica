@@ -74,8 +74,8 @@ export function CouncilChatOrderForm(props: {
             symbol: normalizedSymbol,
             amount: normalizedAmount,
             side,
-            slippage_percent: "0.5",
-            reduce_only: false,
+            slippage_percent: pacificaConfig.defaultSlippagePercent,
+            reduce_only: pacificaConfig.defaultReduceOnly,
             client_order_id: crypto.randomUUID(),
           },
         });
@@ -126,7 +126,7 @@ export function CouncilChatOrderForm(props: {
               <Input
                 value={symbol}
                 onChange={(event) => setSymbol(event.target.value)}
-                placeholder="ETH"
+                placeholder={pacificaConfig.defaultSymbol}
                 autoComplete="off"
                 required
                 disabled={isSubmitting}
@@ -140,7 +140,7 @@ export function CouncilChatOrderForm(props: {
                 value={amount}
                 onChange={(event) => setAmount(event.target.value)}
                 inputMode="decimal"
-                placeholder="0.1"
+                placeholder={pacificaConfig.defaultAmount}
                 autoComplete="off"
                 required
                 disabled={isSubmitting}

@@ -1,3 +1,4 @@
+import { pacificaConfig } from "@/config/pacifica";
 import { ApiResponse } from "@/types/api";
 import { ChatPacificaVerdictAction } from "@/types/chat";
 import { ChatOpenAI } from "@langchain/openai";
@@ -174,17 +175,17 @@ function normalizeTradeSymbol(symbol: string) {
   const normalized = symbol.trim().toUpperCase();
 
   if (!normalized) {
-    return "ETH";
+    return pacificaConfig.defaultSymbol;
   }
 
-  return normalized.replace(/[^A-Z0-9_-]/g, "") || "ETH";
+  return normalized.replace(/[^A-Z0-9_-]/g, "") || pacificaConfig.defaultSymbol;
 }
 
 function normalizeTradeAmount(amount: string) {
   const normalized = amount.trim();
 
   if (!normalized) {
-    return "0.1";
+    return pacificaConfig.defaultAmount;
   }
 
   return normalized;
