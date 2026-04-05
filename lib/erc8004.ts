@@ -1,3 +1,4 @@
+import { AgentReputationSummary } from "@/types/erc8004";
 import {
   AgentSummary,
   EndpointType,
@@ -79,29 +80,20 @@ export async function getErc8004Agents(): Promise<AgentSummary[]> {
 
   const sdk = getAgent0Sdk(MANAGER_PRIVATE_KEY);
 
-  const subgraphClient = sdk.subgraphClient;
-  if (!subgraphClient) {
-    console.error("[ERC-8004] Subgraph client not initialized");
-    return [];
-  }
+  const agentSummaries = await sdk.searchAgents({ owners: [MANAGER_ADDRESS] });
 
-  const agentSummaries = await subgraphClient.getAgents({
-    where: { owner: MANAGER_ADDRESS },
-  });
-
-  // `createdAt` may be in seconds depending on subgraph mapping; normalize to ms.
-  const minCreatedAtMs = erc8004Config.minCreatedAt.getTime();
   const filteredAgentSummaries = agentSummaries.filter((agentSummary) => {
     if (agentSummary.createdAt == null) {
       return false;
     }
 
+    // Normalize `createdAt` to milliseconds if it's in seconds
     const createdAtMs =
       agentSummary.createdAt < 1_000_000_000_000
         ? agentSummary.createdAt * 1000
         : agentSummary.createdAt;
 
-    return createdAtMs >= minCreatedAtMs;
+    return createdAtMs >= erc8004Config.minCreatedAt.getTime();
   });
 
   console.log(
@@ -113,14 +105,14 @@ export async function getErc8004Agents(): Promise<AgentSummary[]> {
 
 export async function getErc8004AgentFeedback(
   agentId: string,
-): Promise<{ count: number; averageValue: number }> {
+): Promise<AgentReputationSummary> {
   console.log("[ERC-8004] Getting agent feedback...");
 
   const sdk = getAgent0Sdk(MANAGER_PRIVATE_KEY);
-  const { count, averageValue } = await sdk.getReputationSummary(agentId);
+  const agentReputationSummary = await sdk.getReputationSummary(agentId);
   console.log(
-    `[ERC-8004] Agent ${agentId} has ${count} feedback entries with an average value of ${averageValue}`,
+    `[ERC-8004] Agent ${agentId} has ${agentReputationSummary.count} feedback entries with an average value of ${agentReputationSummary.averageValue}`,
   );
 
-  return { count, averageValue };
+  return agentReputationSummary;
 }
