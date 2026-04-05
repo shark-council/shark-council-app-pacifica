@@ -8,6 +8,16 @@ import z from "zod";
 export async function POST(request: NextRequest) {
   try {
     // Define the schema for request body validation
+    const actionSchema = z
+      .object({
+        kind: z.literal("pacifica-market-order"),
+        defaults: z.object({
+          symbol: z.string(),
+          amount: z.string(),
+          side: z.enum(["bid", "ask"]),
+        }),
+      })
+      .optional();
     const historyItemSchema = z.object({
       role: z.enum([
         "user",
@@ -17,6 +27,7 @@ export async function POST(request: NextRequest) {
       ]),
       content: z.string(),
       type: z.enum(["thinking", "tool-call", "message", "final"]),
+      action: actionSchema,
     });
     const bodySchema = z.object({
       message: z.string(),

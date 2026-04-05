@@ -5,6 +5,7 @@ import { ChatMessageRole, ChatUiMessage } from "@/types/chat";
 import { Bot, User } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { CouncilChatOrderForm } from "./council-chat-order-form";
 
 const ROLE_LABELS: Record<ChatMessageRole, string> = {
   user: "You",
@@ -30,6 +31,10 @@ const ROLE_BADGE_STYLES: Record<ChatMessageRole, string> = {
 export function CouncilChatMessage(props: { message: ChatUiMessage }) {
   const isFinal = props.message.type === "final";
   const isToolCall = props.message.type === "tool-call";
+  const showOrderForm =
+    props.message.role === "orchestrator" &&
+    isFinal &&
+    props.message.action?.kind === "pacifica-market-order";
 
   return (
     <div
@@ -124,6 +129,9 @@ export function CouncilChatMessage(props: { message: ChatUiMessage }) {
         >
           {props.message.content}
         </ReactMarkdown>
+        {props.message.action && showOrderForm ? (
+          <CouncilChatOrderForm action={props.message.action} />
+        ) : null}
       </div>
     </div>
   );

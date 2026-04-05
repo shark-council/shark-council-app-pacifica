@@ -1,4 +1,5 @@
 import { ApiResponse } from "@/types/api";
+import { ChatPacificaVerdictAction } from "@/types/chat";
 import { ChatOpenAI } from "@langchain/openai";
 import { BaseMessage, HumanMessage, SystemMessage } from "langchain";
 
@@ -126,6 +127,17 @@ function extractUserTopic(messages: BaseMessage[]): string {
   return "Unknown topic";
 }
 
+function buildPacificaVerdictAction(): ChatPacificaVerdictAction {
+  return {
+    kind: "pacifica-market-order",
+    defaults: {
+      symbol: "ETH",
+      amount: "0.1",
+      side: "bid",
+    },
+  };
+}
+
 export async function* streamOrchestrator(
   messages: BaseMessage[],
 ): AsyncGenerator<string> {
@@ -183,6 +195,7 @@ export async function* streamOrchestrator(
     role: "orchestrator",
     type: "final",
     content: verdict,
+    action: buildPacificaVerdictAction(),
   })}\n\n`;
 
   yield `data: [DONE]\n\n`;
