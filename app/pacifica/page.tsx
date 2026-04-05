@@ -5,7 +5,10 @@ import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 import { pacificaConfig } from "@/config/pacifica";
 import { handleError } from "@/lib/error";
-import { getPacificaAccountInfo } from "@/lib/pacifica-account";
+import {
+  approvePacificaBuilderCode,
+  getPacificaAccountInfo,
+} from "@/lib/pacifica-account";
 import { createPacificaMarketOrder } from "@/lib/pacifica-orders";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useState } from "react";
@@ -14,6 +17,7 @@ import { toast } from "sonner";
 export default function PacificaPage() {
   const { connected, publicKey, signMessage } = useWallet();
   const [isGettingAccountInfo, setIsGettingAccountInfo] = useState(false);
+  const [isApprovingBuilderCode, setIsApprovingBuilderCode] = useState(false);
   const [isCreatingOrder, setIsCreatingOrder] = useState(false);
 
   async function handleGetAccountInfo() {
@@ -43,6 +47,54 @@ export default function PacificaPage() {
       handleError({ error, toastTitle: "Failed to get account info" });
     } finally {
       setIsGettingAccountInfo(false);
+    }
+  }
+
+  async function handleApproveBuilderCode() {
+    if (isApprovingBuilderCode) {
+      return;
+    }
+
+    try {
+      console.log("[Component] Approving builder code...");
+
+      const account = publicKey?.toBase58();
+
+      if (!connected || !account) {
+        throw new Error(
+          "Connect a Solana wallet before approving a builder code.",
+        );
+      }
+
+      setIsApprovingBuilderCode(true);
+
+      const { response, requestBody, signableMessage } =
+        await approvePacificaBuilderCode({
+          account,
+          signMessage,
+          approval: {
+            builder_code: pacificaConfig.defaultBuilderCode,
+            max_fee_rate: pacificaConfig.defaultBuilderMaxFeeRate,
+          },
+        });
+
+      console.log(
+        "[Component] Builder code approval request body:",
+        requestBody,
+      );
+      console.log(
+        "[Component] Builder code approval signable message:",
+        signableMessage,
+      );
+      console.log("[Component] Builder code approval response:", response);
+
+      toast.success("Builder code approved", {
+        description: "Check the console for details",
+      });
+    } catch (error) {
+      handleError({ error, toastTitle: "Failed to approve builder code" });
+    } finally {
+      setIsApprovingBuilderCode(false);
     }
   }
 
@@ -105,6 +157,14 @@ export default function PacificaPage() {
         >
           {isGettingAccountInfo && <Spinner />}
           Get Account Info
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={handleApproveBuilderCode}
+          disabled={!connected || isApprovingBuilderCode}
+        >
+          {isApprovingBuilderCode && <Spinner />}
+          Approve Builder Code
         </Button>
         <Button
           variant="secondary"

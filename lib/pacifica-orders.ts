@@ -9,11 +9,10 @@ import type {
   PacificaCreateMarketOrderRequest,
   PacificaCreateMarketOrderResponse,
   PacificaMarketOrderOperationData,
+  PacificaSignMessage,
 } from "@/types/pacifica";
 import axios from "axios";
 import bs58 from "bs58";
-
-type PacificaSignMessage = (message: Uint8Array) => Promise<Uint8Array>;
 
 function buildMarketOrderOperationData(
   order: PacificaCreateMarketOrderInput,
@@ -43,7 +42,8 @@ export async function createPacificaMarketOrder(args: {
 
   const timestamp = Date.now();
   const expiryWindow =
-    order.expiry_window ?? pacificaConfig.defaultExpiryWindow;
+    order.expiry_window ??
+    pacificaConfig.defaultMarketOrderCreationExpiryWindow;
   const operationData = buildMarketOrderOperationData(order);
   const signableMessage = buildPacificaSignatureMessage({
     data: operationData,

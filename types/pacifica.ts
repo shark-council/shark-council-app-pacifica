@@ -1,5 +1,7 @@
 export type PacificaOrderSide = "bid" | "ask";
 
+export type PacificaSignMessage = (message: Uint8Array) => Promise<Uint8Array>;
+
 export interface PacificaOrderTrigger {
   stop_price: string;
   limit_price: string;
@@ -32,6 +34,37 @@ export interface PacificaCreateMarketOrderRequest extends PacificaMarketOrderOpe
 
 export interface PacificaCreateMarketOrderResponse {
   order_id: number;
+}
+
+export interface PacificaApproveBuilderCodeOperationData {
+  builder_code: string;
+  max_fee_rate: string;
+}
+
+export interface PacificaApproveBuilderCodeInput extends PacificaApproveBuilderCodeOperationData {
+  agent_wallet?: string | null;
+  expiry_window?: number;
+}
+
+export interface PacificaApproveBuilderCodeRequest extends PacificaApproveBuilderCodeOperationData {
+  account: string;
+  signature: string;
+  timestamp: number;
+  expiry_window: number;
+  agent_wallet?: string | null;
+}
+
+export interface PacificaApproveBuilderCodeResponseData {
+  builder_code: string;
+  max_fee_rate: string;
+  updated_at?: number;
+}
+
+export interface PacificaApproveBuilderCodeResponse {
+  success: boolean;
+  data: PacificaApproveBuilderCodeResponseData | null;
+  error: string | null;
+  code: number | null;
 }
 
 export interface PacificaAccountInfo {
