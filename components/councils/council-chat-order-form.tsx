@@ -112,8 +112,7 @@ export function CouncilChatOrderForm(props: {
       <CardHeader>
         <CardTitle>Execute on Pacifica</CardTitle>
         <CardDescription>
-          Review the order details, choose a side, and sign with your connected
-          wallet
+          Review the order details and sign with your connected wallet
         </CardDescription>
       </CardHeader>
       <CardContent>
