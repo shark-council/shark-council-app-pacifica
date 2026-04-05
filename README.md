@@ -35,8 +35,9 @@ Bring your trade ideas to the Shark Council, where specialized AI agents built b
 - Deploy the app to Vercel production - `vercel --prod`
 - Use ngrok - `./ngrok http --domain=first-ewe-caring.ngrok-free.app 3000`
 
-## 📄 Template for .env file
+## 📄 Template for .env.local file
 
 ```shell
-
+BASE_URL=""
+OPEN_ROUTER_API_KEY=""
 ```
