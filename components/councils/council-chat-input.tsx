@@ -3,10 +3,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { useRef } from "react";
 import { Spinner } from "../ui/spinner";
+import { SendIcon } from "lucide-react";
+import { ClassValue } from "clsx";
 
 export function CouncilChatInput(props: {
   onSend: (message: string) => void;
   disabled: boolean;
+  className?: ClassValue;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -29,24 +32,20 @@ export function CouncilChatInput(props: {
   }
 
   return (
-    <div className="flex gap-2 items-end pt-2">
+    <div className={cn("flex flex-col items-start gap-2", props.className)}>
       <Textarea
         ref={textareaRef}
         onKeyDown={handleKeyDown}
         disabled={props.disabled}
         placeholder="Ask the council..."
-        rows={2}
-        className={cn(
-          "flex-1 resize-none min-h-15",
-          "disabled:cursor-not-allowed disabled:opacity-50",
-        )}
+        rows={1}
       />
       <Button
         onClick={handleSubmit}
         disabled={props.disabled}
-        className="h-auto py-3 px-6"
+        className="py-3 px-6"
       >
-        {props.disabled && <Spinner />}
+        {props.disabled ? <Spinner /> : <SendIcon />}
         Send
       </Button>
     </div>

@@ -34,23 +34,23 @@ export function CouncilChatMessage(props: { message: ChatUiMessage }) {
   return (
     <div
       className={cn(
-        "flex gap-3 rounded-lg p-4",
-        isFinal && "border border-purple-500/40 bg-purple-500/5",
+        "flex gap-3 rounded-lg p-4 border",
+        isFinal && " border-purple-500/40 bg-purple-500/5",
         isToolCall && "opacity-60",
       )}
     >
-      <Avatar className="size-8 mt-0.5 border shadow-sm">
+      <Avatar className="size-12">
         {ROLE_AVATARS[props.message.role] ? (
           <AvatarImage
             src={ROLE_AVATARS[props.message.role]!}
             alt={ROLE_LABELS[props.message.role]}
           />
         ) : null}
-        <AvatarFallback className="bg-primary/10">
+        <AvatarFallback className="bg-primary">
           {props.message.role === "user" ? (
-            <User className="size-4" />
+            <User className="size-5 text-primary-foreground" />
           ) : (
-            <Bot className="size-4" />
+            <Bot className="size-5 text-primary-foreground" />
           )}
         </AvatarFallback>
       </Avatar>
@@ -59,10 +59,7 @@ export function CouncilChatMessage(props: { message: ChatUiMessage }) {
         <div className="flex items-center gap-2">
           <Badge
             variant="outline"
-            className={cn(
-              "px-2 py-0.5 text-xs font-medium border-transparent",
-              ROLE_BADGE_STYLES[props.message.role],
-            )}
+            className={cn(ROLE_BADGE_STYLES[props.message.role])}
           >
             {ROLE_LABELS[props.message.role]}
           </Badge>

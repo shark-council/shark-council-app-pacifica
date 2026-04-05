@@ -96,18 +96,13 @@ export function CouncilChat(props: { className?: ClassValue }) {
   }
 
   return (
-    <Card
-      className={cn(
-        "flex flex-col h-full flex-1 overflow-hidden",
-        props.className,
-      )}
-    >
-      <CardContent className="flex-1 overflow-hidden p-0">
-        <div className="space-y-4">
+    <Card className={cn(props.className)}>
+      <CardContent>
+        <div className="flex flex-col gap-4">
           {messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center pt-16 pb-8 text-center text-muted-foreground">
-              <p className="text-sm">
-                Ask a question to start the council discussion
+            <div className="h-8 flex flex-col items-center justify-center">
+              <p className="text-sm text-center text-muted-foreground">
+                No messages here yet...
               </p>
             </div>
           )}
@@ -125,14 +120,15 @@ export function CouncilChat(props: { className?: ClassValue }) {
               </div>
             </div>
           )}
-          <div ref={bottomRef} />
         </div>
       </CardContent>
 
-      <CardFooter className="border-t p-4 border-border/50 bg-background/50">
-        <div className="w-full">
-          <CouncilChatInput onSend={handleSendMessage} disabled={isLoading} />
-        </div>
+      <CardFooter ref={bottomRef}>
+        <CouncilChatInput
+          onSend={handleSendMessage}
+          disabled={isLoading}
+          className="w-full"
+        />
       </CardFooter>
     </Card>
   );
