@@ -54,7 +54,7 @@ export function CouncilChatOrderForm(props: {
       const account = publicKey?.toBase58();
 
       if (!connected || !account) {
-        throw new Error("Connect a Solana wallet before creating an order.");
+        throw new Error("Connect a Solana wallet before creating an order");
       }
 
       setIsSubmitting(true);
@@ -63,7 +63,7 @@ export function CouncilChatOrderForm(props: {
       const normalizedAmount = amount.trim();
 
       if (!normalizedSymbol || !normalizedAmount) {
-        throw new Error("Provide both a symbol and amount before submitting.");
+        throw new Error("Provide both a symbol and amount before submitting");
       }
 
       const { response, requestBody, signableMessage } =

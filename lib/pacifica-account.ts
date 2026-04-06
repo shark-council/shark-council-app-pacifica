@@ -43,7 +43,7 @@ export async function approvePacificaBuilderCode(args: {
   const { account, approval, signMessage } = args;
 
   if (!signMessage) {
-    throw new Error("Connected wallet does not support message signing.");
+    throw new Error("Connected wallet does not support message signing");
   }
 
   const timestamp = Date.now();

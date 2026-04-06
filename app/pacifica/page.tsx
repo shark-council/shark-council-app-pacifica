@@ -31,7 +31,7 @@ export default function PacificaPage() {
       const account = publicKey?.toBase58();
 
       if (!connected || !account) {
-        throw new Error("Connect a Solana wallet before creating an order.");
+        throw new Error("Connect a Solana wallet before creating an order");
       }
 
       setIsGettingAccountInfo(true);
@@ -62,7 +62,7 @@ export default function PacificaPage() {
 
       if (!connected || !account) {
         throw new Error(
-          "Connect a Solana wallet before approving a builder code.",
+          "Connect a Solana wallet before approving a builder code",
         );
       }
 
@@ -109,7 +109,7 @@ export default function PacificaPage() {
       const account = publicKey?.toBase58();
 
       if (!connected || !account) {
-        throw new Error("Connect a Solana wallet before creating an order.");
+        throw new Error("Connect a Solana wallet before creating an order");
       }
 
       setIsCreatingOrder(true);

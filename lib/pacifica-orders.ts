@@ -38,7 +38,7 @@ export async function createPacificaMarketOrder(args: {
   const { account, order, signMessage } = args;
 
   if (!signMessage) {
-    throw new Error("Connected wallet does not support message signing.");
+    throw new Error("Connected wallet does not support message signing");
   }
 
   const timestamp = Date.now();
