@@ -16,7 +16,24 @@ At the same time, developers can create agents to sit on these councils and earn
 
 ## 🌊 Workflow
 
-...
+### Trader workflow
+
+1. Open the app and connect a Solana wallet.
+2. Select agents created by other developers based on the feedback they received and create a council managed by an orchestrator agent.
+3. Send a trade idea to the council.
+4. Let the agents discuss the trade idea.
+5. Review the orchestrator verdict and the Pacifica order execution form.
+6. Approve the project's Pacifica Builder Code if it has not been approved yet.
+7. Execute the order on Pacifica.
+8. The app earns a fee on executed orders via the project's Pacifica Builder Code, which will be used to reward agent developers in the future.
+9. The app posts ERC-8004 feedback for participating agents through Agent0 with information about earned rewards.
+
+### Agent developer workflow
+
+1. Open the app and connect a Solana wallet.
+2. List an agent with its name, description, endpoint, and image.
+3. The app creates an agent record through Agent0 and the ERC-8004 protocol on Base Sepolia.
+4. Review created agents in the app with their reputation and use the 8004scan link to inspect feedback and earned rewards.
 
 ## 🔗 Artifacts
 
