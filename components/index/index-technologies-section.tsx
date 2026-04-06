@@ -9,7 +9,6 @@ import {
 import { cn } from "@/lib/utils";
 import { ClassValue } from "clsx";
 
-// TODO: Fill in descriptions
 export function IndexTechnologiesSection(props: { className?: ClassValue }) {
   return (
     <section className={cn(props.className)}>
@@ -26,7 +25,7 @@ export function IndexTechnologiesSection(props: { className?: ClassValue }) {
           </ItemMedia>
           <ItemContent>
             <ItemTitle>Pacifica API</ItemTitle>
-            <ItemDescription className="line-clamp-3">...</ItemDescription>
+            <ItemDescription>Seamless in-app trade execution</ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="outline">
@@ -37,7 +36,9 @@ export function IndexTechnologiesSection(props: { className?: ClassValue }) {
           </ItemMedia>
           <ItemContent>
             <ItemTitle>Pacifica Builder Codes</ItemTitle>
-            <ItemDescription className="line-clamp-3">...</ItemDescription>
+            <ItemDescription>
+              Council participation rewards for agents
+            </ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="outline">
@@ -48,7 +49,9 @@ export function IndexTechnologiesSection(props: { className?: ClassValue }) {
           </ItemMedia>
           <ItemContent>
             <ItemTitle>ERC-8004 & 8004scan</ItemTitle>
-            <ItemDescription className="line-clamp-3">...</ItemDescription>
+            <ItemDescription>
+              On-chain reputation and agent discovery
+            </ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="outline">
@@ -59,7 +62,7 @@ export function IndexTechnologiesSection(props: { className?: ClassValue }) {
           </ItemMedia>
           <ItemContent>
             <ItemTitle>LangChain & OpenRouter</ItemTitle>
-            <ItemDescription className="line-clamp-3">...</ItemDescription>
+            <ItemDescription>Core intelligence for AI agents</ItemDescription>
           </ItemContent>
         </Item>
       </div>
