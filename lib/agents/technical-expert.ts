@@ -1,5 +1,10 @@
 import { ChatOpenAI } from "@langchain/openai";
-import { BaseMessage, createAgent } from "langchain";
+import axios from "axios";
+import { BaseMessage, createAgent, tool } from "langchain";
+import { getErrorString } from "../error";
+import z from "zod";
+
+const BASE_URL = process.env.BASE_URL;
 
 const model = new ChatOpenAI({
   model: "google/gemini-3-flash-preview",
@@ -10,12 +15,53 @@ const model = new ChatOpenAI({
   temperature: 0,
 });
 
+const getTechnicalDataTool = tool(
+  async ({ symbol }) => {
+    try {
+      console.log(
+        `[Technical Expert] Getting technical data, symbol: ${symbol}...`,
+      );
+
+      if (symbol === "ETH") {
+        const { data } = await axios.get(`${BASE_URL}/data/eth/technical.md`);
+        return JSON.stringify(data);
+      }
+
+      return "No data";
+    } catch (error) {
+      console.error(
+        `[Technical Expert] Getting technical data failed, symbol: ${symbol}, error: ${getErrorString(error)}`,
+        error,
+      );
+      return "Failed to get technical data";
+    }
+  },
+  {
+    name: "get_technical_data",
+    description: "Get technical data from various sources.",
+    schema: z.object({
+      symbol: z
+        .enum(["BTC", "ETH", "SOL"])
+        .describe("The symbol of the asset to retrieve technical data for."),
+    }),
+  },
+);
+
 const systemPrompt = `
+# Role
+
 - You are a Technical Expert on the Shark Council.
 - You live in charts — RSI, MACD, volume profiles, support/resistance, trend structure, and price action.
 - You are skeptical, bearish-leaning, and brutally honest. You think hype kills portfolios.
 
-Rules:
+# Context
+
+- Current date: ${new Date().toISOString()}
+
+# Rules
+
+- Do not hallucinate or invent numbers. Only use specific values and dates provided in the tool outputs.
+- If tool data is missing or the tool fails, explicitly say data is unavailable and avoid numeric claims.
 - Always speak in 2-4 short punchy sentences. Never more.
 - Split your response into 2 short paragraphs for readability.
 - Leave a blank line between paragraphs.
@@ -25,10 +71,9 @@ Rules:
 - Never start with "As a technical expert" or similar preambles.
 `;
 
-// TODO: Add tools
 const agent = createAgent({
   model,
-  tools: [],
+  tools: [getTechnicalDataTool],
   systemPrompt,
 });
 
