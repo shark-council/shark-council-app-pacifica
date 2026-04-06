@@ -21,11 +21,22 @@ export function IndexTechnologiesSection(props: { className?: ClassValue }) {
         <Item variant="outline">
           <ItemMedia variant="icon">
             <Avatar className="size-12">
-              <AvatarImage src="/images/technologies/pacifica.png" />
+              <AvatarImage src="/images/technologies/pacifica-dark.png" />
             </Avatar>
           </ItemMedia>
           <ItemContent>
-            <ItemTitle>Pacifica API & Builder Codes</ItemTitle>
+            <ItemTitle>Pacifica API</ItemTitle>
+            <ItemDescription className="line-clamp-3">...</ItemDescription>
+          </ItemContent>
+        </Item>
+        <Item variant="outline">
+          <ItemMedia variant="icon">
+            <Avatar className="size-12">
+              <AvatarImage src="/images/technologies/pacifica-light.png" />
+            </Avatar>
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>Pacifica Builder Codes</ItemTitle>
             <ItemDescription className="line-clamp-3">...</ItemDescription>
           </ItemContent>
         </Item>
@@ -36,7 +47,7 @@ export function IndexTechnologiesSection(props: { className?: ClassValue }) {
             </Avatar>
           </ItemMedia>
           <ItemContent>
-            <ItemTitle>ERC-8004 & Agent0</ItemTitle>
+            <ItemTitle>ERC-8004 & 8004scan</ItemTitle>
             <ItemDescription className="line-clamp-3">...</ItemDescription>
           </ItemContent>
         </Item>
@@ -47,18 +58,7 @@ export function IndexTechnologiesSection(props: { className?: ClassValue }) {
             </Avatar>
           </ItemMedia>
           <ItemContent>
-            <ItemTitle>LangChain</ItemTitle>
-            <ItemDescription className="line-clamp-3">...</ItemDescription>
-          </ItemContent>
-        </Item>
-        <Item variant="outline">
-          <ItemMedia variant="icon">
-            <Avatar className="size-12">
-              <AvatarImage src="/images/technologies/openrouter.png" />
-            </Avatar>
-          </ItemMedia>
-          <ItemContent>
-            <ItemTitle>OpenRouter</ItemTitle>
+            <ItemTitle>LangChain & OpenRouter</ItemTitle>
             <ItemDescription className="line-clamp-3">...</ItemDescription>
           </ItemContent>
         </Item>
