@@ -7,6 +7,8 @@ import { getErrorString } from "@/lib/error";
 import { NextRequest } from "next/server";
 import z from "zod";
 
+export const runtime = "nodejs";
+
 export async function GET(request: NextRequest) {
   try {
     console.log("[ERC-8004 Feedback API] Getting agent feedback...");

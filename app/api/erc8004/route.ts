@@ -4,6 +4,8 @@ import { getErrorString } from "@/lib/error";
 import { NextRequest } from "next/server";
 import z from "zod";
 
+export const runtime = "nodejs";
+
 export async function GET() {
   try {
     console.log("[ERC-8004 API] Getting agents...");
