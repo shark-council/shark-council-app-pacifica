@@ -3,7 +3,7 @@ export const pacificaConfig = {
   apiBaseUrl: "https://test-api.pacifica.fi",
   defaultBuilderCodeApprovalExpiryWindow: 5_000,
   defaultMarketOrderCreationExpiryWindow: 30_000,
-  defaultBuilderCode: "",
+  defaultBuilderCode: "SharkCouncil",
   defaultBuilderMaxFeeRate: "0.001",
   defaultSymbol: "ETH",
   defaultAmount: "0.1",
