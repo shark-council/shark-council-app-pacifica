@@ -34,8 +34,3 @@ export type ChatUiMessage = {
   type: ChatUiMessageType;
   action?: ChatPacificaVerdictAction;
 };
-
-export type OrchestratorRequestBody = {
-  message: string;
-  history: Pick<ChatMessage, "role" | "content" | "type">[];
-};
