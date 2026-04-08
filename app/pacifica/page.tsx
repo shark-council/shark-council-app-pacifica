@@ -75,6 +75,7 @@ export default function PacificaPage() {
           approval: {
             builder_code: pacificaConfig.defaultBuilderCode,
             max_fee_rate: pacificaConfig.defaultBuilderMaxFeeRate,
+            agent_wallet: null,
           },
         });
 
@@ -125,6 +126,7 @@ export default function PacificaPage() {
             slippage_percent: pacificaConfig.defaultSlippagePercent,
             reduce_only: pacificaConfig.defaultReduceOnly,
             client_order_id: crypto.randomUUID(),
+            builder_code: pacificaConfig.defaultBuilderCode,
           },
         });
 

@@ -38,6 +38,7 @@ At the same time, developers can create agents to sit on these councils and earn
 ## 🔗 Artifacts
 
 - App - https://shark-council-app-pacifica.vercel.app/
+- Pacifica Builder Code (Testnet) - `SharkCouncil`
 
 ## 🛠️ Technologies
 
